@@ -16,3 +16,6 @@ avalanche-stats uptime-by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
 
 ## Donations
 Consider supporting this project by donating to `X-avax1rc0jdc0xvj7damvvf6wne7zy3kjssazzwck8qa`
+
+## Useful Links
+- [idelse on twitter](https://twitter.com/idelseresearch)
