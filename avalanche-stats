@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const getNodes = require("./lib");
+const { program } = require("commander");
+const chalk = require('chalk');
+
+program.version("0.0.1");
+
+const getColorByUptime = u => {
+    if (u < .6) return 'red';
+    if (u < .8) return 'yellow';
+    return 'yellow';
+}
+
+program.command("uptime-by-nodeId <nodeId>")
+    .action(async (nodeId) => {
+        const uptime = (await getNodes())[nodeId];
+        console.log(chalk[getColorByUptime(uptime.avg)](`Average uptime ${nodeId}: ${uptime.avg*100}%`));
+        console.log("---------------------------------------------------------------------------");
+        for(let i = 0; i < uptime.details.length; i++) {
+            let u = (uptime.details[i][1]*100).toFixed(2);
+            if (u.length === 4) u = '  '+u;
+            if (u.length === 5) u = ' '+u;
+            console.log(chalk[getColorByUptime(uptime.details[i][1])](`> ${u}%→ ${uptime.details[i][0]}`));
+        }
+    });
+
+program.parse(process.argv);
