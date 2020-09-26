@@ -1,4 +1,4 @@
-# avalanche-uptime
+# avalanche-stats
 this script provides an average uptime of an avalanche node from the perspective of a subnet of the network.
 
 ## how this script works?
