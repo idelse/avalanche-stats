@@ -11,7 +11,7 @@ npm i -g avalanche-stats
 
 ## how to use
 ```
-avalanche-stats by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
+avalanche-stats uptime-by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
 ```
 
 ## donations
