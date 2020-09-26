@@ -15,13 +15,13 @@ const getColorByUptime = u => {
 program.command("uptime-by-nodeId <nodeId>")
     .action(async (nodeId) => {
         const uptime = (await getNodes())[nodeId];
-        console.log(chalk[getColorByUptime(uptime.avg)](`Average uptime ${nodeId}: ${uptime.avg*100}%`));
-        console.log("---------------------------------------------------------------------------");
+        console.log(chalk[getColorByUptime(uptime.avg)](`Average uptime ${nodeId}: ${(uptime.avg*100).toFixed(2)}%`));
+        console.log("------------------------------------------------------------------------");
         for(let i = 0; i < uptime.details.length; i++) {
             let u = (uptime.details[i][1]*100).toFixed(2);
             if (u.length === 4) u = '  '+u;
             if (u.length === 5) u = ' '+u;
-            console.log(chalk[getColorByUptime(uptime.details[i][1])](`> ${u}%→ ${uptime.details[i][0]}`));
+            console.log(chalk[getColorByUptime(uptime.details[i][1])](`> ${u}% → ${uptime.details[i][0]}`));
         }
     });
 
