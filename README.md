@@ -6,12 +6,12 @@ it inspects the avalanche network, looking for nodes with `9650` port open. Then
 
 ## how to install
 ```
-npm i -g avalanche-uptime
+npm i -g avalanche-stats
 ```
 
 ## how to use
 ```
-avalanche-uptime by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
+avalanche-stats by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
 ```
 
 ## donations
