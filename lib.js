@@ -8,7 +8,7 @@ const post = (uri, body) => {
     return fetch(uri, {
         method: 'post',
         body: JSON.stringify(body),
-        timeout: 2000,
+        timeout: 10000,
         headers: {
             'Content-Type': 'application/json'
         },
