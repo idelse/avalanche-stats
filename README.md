@@ -13,6 +13,9 @@ npm i -g avalanche-stats
 
 ## How to use
 ```
+avalanche-stats uptime-by-nodeId <NodeID> [timeout]
+```
+```
 avalanche-stats uptime-by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
 ```
 

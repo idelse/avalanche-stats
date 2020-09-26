@@ -1,6 +1,7 @@
 const isPortReachable = require('is-port-reachable');
 const fetch = require("node-fetch");
 const AVA_NODE_URI = "https://api.avax.network";
+let TIMEOUT = 10_000;
 
 let openNodes = {};
 
@@ -8,7 +9,7 @@ const post = (uri, body) => {
     return fetch(uri, {
         method: 'post',
         body: JSON.stringify(body),
-        timeout: 10000,
+        timeout: TIMEOUT,
         headers: {
             'Content-Type': 'application/json'
         },
@@ -107,7 +108,9 @@ function getOpenNodeIdAndIps() {
     return Object.keys(openNodes).map(k => [k, `http://${openNodes[k].host}:9650`]);   
 }
 
-async function execute () {
+async function execute (timeout) {
+
+    TIMEOUT = timeout
 
     // 1. get open nodes from https://api.avax.network
     await updateOpenNodes();
