@@ -1,6 +1,6 @@
 {
   "name": "avalanche-stats",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {},
@@ -10,7 +10,8 @@
     "chalk": "^4.1.0",
     "commander": "^6.1.0",
     "is-port-reachable": "^3.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "whois-json": "^2.0.4"
   },
   "preferGlobal": true,
   "bin": {

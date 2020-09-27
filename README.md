@@ -18,6 +18,9 @@ avalanche-stats uptime-by-nodeId <NodeID> [timeout]
 ```
 avalanche-stats uptime-by-nodeId NodeID-Js3ahWihoTLJWTrWzpth9mttniJNuyoki
 ```
+```
+avalanche-stats get-peers
+```
 
 ## Donations
 Consider supporting this project by donating to `X-avax1rc0jdc0xvj7damvvf6wne7zy3kjssazzwck8qa`

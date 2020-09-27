@@ -1,33 +1,56 @@
 #!/usr/bin/env node
-
-const getNodes = require("./lib");
+const lib = require("./libs/lib");
+const { getPeers, getProviderByIp } = require("./libs/rpc");
 const { program } = require("commander");
 const chalk = require('chalk');
+const fs = require("fs");
 
 program.version("0.0.1");
 
 const getColorByUptime = u => {
     if (u < .6) return 'red';
     if (u < .8) return 'yellow';
-    return 'yellow';
+    return 'green';
 }
 
-program.command("uptime-by-nodeId <nodeId> [timeout]")
-    .action(async (nodeId, timeout = 10_000) => {
-        if (timeout < 500) throw Error("timeout must be at least 500 ms");
-        const uptime = (await getNodes(timeout))[nodeId];
-        if (!uptime) {
+program.command("uptime-by-nodeId <nodeId> [timeout] [root]")
+    .action(async (nodeId, timeout = 10_000, root = "https://api.avax.network") => {
+        const nodeFromOpenPeers = (await lib.getUptimeByNode(root, timeout))[nodeId];
+        if (!nodeFromOpenPeers) {
             console.log("No open nodes founded. Try to increase timeout.");
             return;
         }
-        console.log(chalk[getColorByUptime(uptime.avg)](`Average uptime ${nodeId}: ${(uptime.avg*100).toFixed(2)}%`));
-        console.log("------------------------------------------------------------------------");
-        for(let i = 0; i < uptime.details.length; i++) {
-            let u = (uptime.details[i][1]*100).toFixed(2);
+        const avg = nodeFromOpenPeers.avg;
+        let uptimeFromOpenPeers = nodeFromOpenPeers.details;
+        
+        // 1. resumed average uptime 
+        const { provider, ip } = (await lib.getPeers("https://api.avax.network", true)).filter(v => v.nodeID === nodeId)[0];
+        console.log(chalk[getColorByUptime(avg)](`Average uptime ${nodeId}: ${(avg*100).toFixed(2)}% → ${ip} ${provider}`));
+
+        // 2. detailed uptime
+        console.log("---------------------------------------------------------------------------------------------------------------------------");
+
+        // 3. sort details by uptime
+        uptimeFromOpenPeers = uptimeFromOpenPeers.sort(([a], [b]) => a.provider > b.provider ? 1 : -1);
+        
+        // 4. print results
+        uptimeFromOpenPeers.forEach(([openPeer, uptime]) => {
+            const color = getColorByUptime(uptime);
+            let u = (uptime*100).toFixed(2);
             if (u.length === 4) u = '  '+u;
             if (u.length === 5) u = ' '+u;
-            console.log(chalk[getColorByUptime(uptime.details[i][1])](`> ${u}% → ${uptime.details[i][0]}`));
-        }
+            console.log(chalk[color](`> ${u}% → ${openPeer.nodeID}\t${openPeer.host}\t${openPeer.provider}`));
+        });
+    });
+
+program.command("get-peers [cache]")
+    .action(async (cache = true) => {
+        if (cache === "false") cache = false;
+        let peers = await lib.getPeers("https://api.avax.network", cache);
+        peers = peers.sort((a, b) => a.provider > b.provider ? 1 : -1);
+        peers.forEach(p => {
+            console.log(`${p.nodeID} \t${p.provider}`);
+        });
     });
 
 program.parse(process.argv);
