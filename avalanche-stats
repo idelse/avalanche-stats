@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 const lib = require("./libs/lib");
-const { getPeers, getProviderByIp } = require("./libs/rpc");
 const { program } = require("commander");
 const chalk = require('chalk');
-const fs = require("fs");
 
 program.version(require("./package.json").version);
 
@@ -49,7 +47,7 @@ program.command("get-peers [cache]")
         let peers = await lib.getPeers("https://api.avax.network", cache);
         peers = peers.sort((a, b) => a.provider > b.provider ? 1 : -1);
         peers.forEach(p => {
-            console.log(`${p.nodeID} \t${p.provider}`);
+            console.log(`${p.nodeID} \t${p.provider} (${p.ip})`);
         });
     });
 
