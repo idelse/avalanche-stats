@@ -5,7 +5,7 @@ const { program } = require("commander");
 const chalk = require('chalk');
 const fs = require("fs");
 
-program.version("0.0.1");
+program.version(require("./package.json").version);
 
 const getColorByUptime = u => {
     if (u < .6) return 'red';
