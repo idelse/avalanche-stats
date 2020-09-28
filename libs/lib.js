@@ -124,5 +124,6 @@ async function getUptimeByNode (root, timeout) {
 module.exports = {
     getUptimeByNode,
     PromiseAllSequential,
-    getPeers
+    getPeers,
+    getOpenPeers
 };
